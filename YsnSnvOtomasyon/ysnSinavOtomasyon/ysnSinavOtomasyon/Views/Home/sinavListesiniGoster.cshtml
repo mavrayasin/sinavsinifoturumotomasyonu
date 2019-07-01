@@ -1,0 +1,34 @@
+﻿@model ysnSinavOtomasyon.Models.derslikPlanClass
+@{
+    ViewBag.Title = "sinavListesiniGoster";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>sinavListesiniGoster</h2>
+
+<div class="row">
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>SNO</th>
+                <th>ÖĞRENCİ AD SOYAD</th>
+                <th>SINAV</th>
+                <th>DERSLİK</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.sinavOTurumPlani)
+            {
+                <tr>
+                    <td>@item.SiraNo</td>
+                    <td>@item.Ogrenci.Ad @item.Ogrenci.Soyad</td>
+                    <td>@item.Sinav.SinavAdi</td>
+                    <td>@item.Derslik.DerslikAdi</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+

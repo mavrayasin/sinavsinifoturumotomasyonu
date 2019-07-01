@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="sinavdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Derslik">
+          <Key>
+            <PropertyRef Name="DerslikId" />
+          </Key>
+          <Property Name="DerslikId" Type="int" Nullable="false" />
+          <Property Name="DerslikAdi" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="OgrenciId" />
+          </Key>
+          <Property Name="OgrenciId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Soyad" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="No" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sinav">
+          <Key>
+            <PropertyRef Name="SinavId" />
+          </Key>
+          <Property Name="SinavId" Type="int" Nullable="false" />
+          <Property Name="SinavAdi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SinavTarihi" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SinavListe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SinavID" Type="int" Nullable="false" />
+          <Property Name="DerslikID" Type="int" Nullable="false" />
+          <Property Name="OgrenciID" Type="int" Nullable="false" />
+          <Property Name="SiraNo" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_SinavListe_Derslik">
+          <End Role="Derslik" Type="Self.Derslik" Multiplicity="1" />
+          <End Role="SinavListe" Type="Self.SinavListe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Derslik">
+              <PropertyRef Name="DerslikId" />
+            </Principal>
+            <Dependent Role="SinavListe">
+              <PropertyRef Name="DerslikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SinavListe_Ogrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="SinavListe" Type="Self.SinavListe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciId" />
+            </Principal>
+            <Dependent Role="SinavListe">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SinavListe_Sinav">
+          <End Role="Sinav" Type="Self.Sinav" Multiplicity="1" />
+          <End Role="SinavListe" Type="Self.SinavListe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sinav">
+              <PropertyRef Name="SinavId" />
+            </Principal>
+            <Dependent Role="SinavListe">
+              <PropertyRef Name="SinavID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="sinavdbModelStoreContainer">
+          <EntitySet Name="Derslik" EntityType="Self.Derslik" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sinav" EntityType="Self.Sinav" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SinavListe" EntityType="Self.SinavListe" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_SinavListe_Derslik" Association="Self.FK_SinavListe_Derslik">
+            <End Role="Derslik" EntitySet="Derslik" />
+            <End Role="SinavListe" EntitySet="SinavListe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SinavListe_Ogrenci" Association="Self.FK_SinavListe_Ogrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="SinavListe" EntitySet="SinavListe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SinavListe_Sinav" Association="Self.FK_SinavListe_Sinav">
+            <End Role="Sinav" EntitySet="Sinav" />
+            <End Role="SinavListe" EntitySet="SinavListe" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="sinavdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Derslik">
+          <Key>
+            <PropertyRef Name="DerslikId" />
+          </Key>
+          <Property Name="DerslikId" Type="Int32" Nullable="false" />
+          <Property Name="DerslikAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SinavListe" Relationship="sinavdbModel.FK_SinavListe_Derslik" FromRole="Derslik" ToRole="SinavListe" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="OgrenciId" />
+          </Key>
+          <Property Name="OgrenciId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Soyad" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="No" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SinavListe" Relationship="sinavdbModel.FK_SinavListe_Ogrenci" FromRole="Ogrenci" ToRole="SinavListe" />
+        </EntityType>
+        <EntityType Name="Sinav">
+          <Key>
+            <PropertyRef Name="SinavId" />
+          </Key>
+          <Property Name="SinavId" Type="Int32" Nullable="false" />
+          <Property Name="SinavAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SinavTarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SinavListe" Relationship="sinavdbModel.FK_SinavListe_Sinav" FromRole="Sinav" ToRole="SinavListe" />
+        </EntityType>
+        <EntityContainer Name="sinavdbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Derslik" EntityType="Self.Derslik" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" />
+          <EntitySet Name="Sinav" EntityType="Self.Sinav" />
+          <EntitySet Name="SinavListe" EntityType="sinavdbModel.SinavListe" />
+          <AssociationSet Name="FK_SinavListe_Derslik" Association="sinavdbModel.FK_SinavListe_Derslik">
+            <End Role="Derslik" EntitySet="Derslik" />
+            <End Role="SinavListe" EntitySet="SinavListe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SinavListe_Ogrenci" Association="sinavdbModel.FK_SinavListe_Ogrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="SinavListe" EntitySet="SinavListe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SinavListe_Sinav" Association="sinavdbModel.FK_SinavListe_Sinav">
+            <End Role="Sinav" EntitySet="Sinav" />
+            <End Role="SinavListe" EntitySet="SinavListe" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="SinavListe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SinavID" Type="Int32" Nullable="false" />
+          <Property Name="DerslikID" Type="Int32" Nullable="false" />
+          <Property Name="OgrenciID" Type="Int32" Nullable="false" />
+          <Property Name="SiraNo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Derslik" Relationship="sinavdbModel.FK_SinavListe_Derslik" FromRole="SinavListe" ToRole="Derslik" />
+          <NavigationProperty Name="Ogrenci" Relationship="sinavdbModel.FK_SinavListe_Ogrenci" FromRole="SinavListe" ToRole="Ogrenci" />
+          <NavigationProperty Name="Sinav" Relationship="sinavdbModel.FK_SinavListe_Sinav" FromRole="SinavListe" ToRole="Sinav" />
+        </EntityType>
+        <Association Name="FK_SinavListe_Derslik">
+          <End Type="sinavdbModel.Derslik" Role="Derslik" Multiplicity="1" />
+          <End Type="sinavdbModel.SinavListe" Role="SinavListe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Derslik">
+              <PropertyRef Name="DerslikId" />
+            </Principal>
+            <Dependent Role="SinavListe">
+              <PropertyRef Name="DerslikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SinavListe_Ogrenci">
+          <End Type="sinavdbModel.Ogrenci" Role="Ogrenci" Multiplicity="1" />
+          <End Type="sinavdbModel.SinavListe" Role="SinavListe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="OgrenciId" />
+            </Principal>
+            <Dependent Role="SinavListe">
+              <PropertyRef Name="OgrenciID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SinavListe_Sinav">
+          <End Type="sinavdbModel.Sinav" Role="Sinav" Multiplicity="1" />
+          <End Type="sinavdbModel.SinavListe" Role="SinavListe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sinav">
+              <PropertyRef Name="SinavId" />
+            </Principal>
+            <Dependent Role="SinavListe">
+              <PropertyRef Name="SinavID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="sinavdbModelStoreContainer" CdmEntityContainer="sinavdbEntities">
+          <EntitySetMapping Name="Derslik">
+            <EntityTypeMapping TypeName="sinavdbModel.Derslik">
+              <MappingFragment StoreEntitySet="Derslik">
+                <ScalarProperty Name="DerslikId" ColumnName="DerslikId" />
+                <ScalarProperty Name="DerslikAdi" ColumnName="DerslikAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogrenci">
+            <EntityTypeMapping TypeName="sinavdbModel.Ogrenci">
+              <MappingFragment StoreEntitySet="Ogrenci">
+                <ScalarProperty Name="OgrenciId" ColumnName="OgrenciId" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="No" ColumnName="No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sinav">
+            <EntityTypeMapping TypeName="sinavdbModel.Sinav">
+              <MappingFragment StoreEntitySet="Sinav">
+                <ScalarProperty Name="SinavId" ColumnName="SinavId" />
+                <ScalarProperty Name="SinavAdi" ColumnName="SinavAdi" />
+                <ScalarProperty Name="SinavTarihi" ColumnName="SinavTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SinavListe">
+            <EntityTypeMapping TypeName="sinavdbModel.SinavListe">
+              <MappingFragment StoreEntitySet="SinavListe">
+                <ScalarProperty Name="SiraNo" ColumnName="SiraNo" />
+                <ScalarProperty Name="OgrenciID" ColumnName="OgrenciID" />
+                <ScalarProperty Name="DerslikID" ColumnName="DerslikID" />
+                <ScalarProperty Name="SinavID" ColumnName="SinavID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
