@@ -30,6 +30,13 @@ namespace ysnSinavOtomasyon.Controllers
             dpc.derslikler = sinav_db.Derslik.ToList();
             dpc.sinavlar = sinav_db.Sinav.ToList();
 
+
+
+
+
+
+
+
             return View(dpc);
         }
 
