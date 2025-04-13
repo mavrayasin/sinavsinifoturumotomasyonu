@@ -36,7 +36,6 @@ namespace ysnSinavOtomasyon.Controllers
         public ActionResult sinavListesiniGoster(int sinavSecilen, int derslikSecilen)
         {
             sinavdbEntities sinav_db = new sinavdbEntities();
-
             derslikPlanClass dpc = new derslikPlanClass();
 
             dpc.sinavOTurumPlani = sinav_db.SinavListe.Where(i => i.DerslikID == derslikSecilen && i.SinavID == sinavSecilen).ToList();
